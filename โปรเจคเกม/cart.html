@@ -93,8 +93,8 @@
     </div>
 
     <a href="reviews.html">รีวิว</a>
-    <a href="#support">สนับสนุนลูกค้า</a>
-    <a href="#about">เกี่ยวกับเรา</a>
+    <a href="support.html">สนับสนุนลูกค้า</a>
+    <a href="about.html">เกี่ยวกับเรา</a>
   </nav>
   <section class="categories" id="categories">
     <h2>หมวดหมู่สินค้า</h2>
@@ -105,10 +105,10 @@
         <h4>ฟิลเตอร์สำหรับเสื้อผ้าเกมมิ่ง</h4>
         <img src="https://i.pinimg.com/736x/e7/60/73/e760734749c81faff5048e33198b4f22.jpg" alt="เสื้อผ้าเกมมิ่ง">
         <ul>
-          <li>ราคา</li>
-          <li>สี</li>
-          <li>ขนาด</li>
-          <li>แบรนด์</li>
+          <li>ราคา : 299 บาท</li>
+          <li>สี : ดำ</li>
+          <li>ขนาด : XL</li>
+          <li>แบรนด์ : cocoa</li>
         </ul>
       </div>
     </div>
@@ -119,9 +119,9 @@
         <h4>ฟิลเตอร์สำหรับอุปกรณ์อิเล็กทรอนิกส์</h4>
         <img src="https://i.pinimg.com/736x/10/42/c9/1042c9567119513ad8de41a1de6cb9c9.jpg" alt="">
         <ul>
-          <li>ราคา</li>
-          <li>ยี่ห้อ</li>
-          <li>การรับประกัน</li>
+          <li>ราคา : 990</li>
+          <li>ยี่ห้อ : Rimbus</li>
+          <li>การรับประกัน : 1 ปี</li>
         </ul>
       </div>
     </div>
@@ -132,13 +132,14 @@
         <h4>ฟิลเตอร์สำหรับสินค้าลดราคา</h4>
         <img src="https://i.pinimg.com/736x/ac/2a/a4/ac2aa483ce9a0517761d32bdc626eeff.jpg" alt="">
         <ul>
-          <li>เปอร์เซ็นต์ส่วนลด</li>
-          <li>ประเภทสินค้า</li>
+          <li>เปอร์เซ็นต์ส่วนลด : 60%</li>
+          <li>จากราคา 375 บาท เหลือ 199 บาท ไปเลยย</li>
+          <li>ประเภทสินค้า : แมวปลอม</li>
         </ul>
       </div>
     </div>
   </section>
-
+  
   <script>
     const items = document.querySelectorAll('.category-item-wrapper');
   
@@ -149,6 +150,38 @@
       item.addEventListener('click', () => {
         popup.classList.toggle('hidden');
       });
+  
+      // ปุ่มเพิ่มใส่ตะกร้า
+      const addButton = document.createElement('button');
+      addButton.textContent = 'เพิ่มใส่ตะกร้า';
+      addButton.className = 'btn btn-success btn-sm mt-2 d-block mx-auto';
+  
+      addButton.addEventListener('click', () => {
+        const name = item.textContent.trim();
+  
+        // ✅ กำหนดราคาตายตัว
+        let price = 0;
+        if (name === 'เสื้อผ้าเกมมิ่ง') price = 299;
+        else if (name === 'อุปกรณ์อิเล็กทรอนิกส์') price = 990;
+        else if (name === 'สินค้าลดราคา') price = 150;
+        else price = 100; // fallback เผื่อมีหมวดใหม่ในอนาคต
+  
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItem = cart.find(i => i.name === name);
+  
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ name, price, quantity: 1 });
+        }
+  
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert(`${name} ถูกเพิ่มไปยังตะกร้าเรียบร้อยแล้ว`);
+      });
+  
+      popup.appendChild(addButton);
     });
   </script>
+  
+  
   
